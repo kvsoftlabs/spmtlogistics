@@ -58,9 +58,30 @@ class TripController extends Controller
     private function sendEmail($data)
     {
         $email = \Config\Services::email();
+    
+        // Set email configurations (can be customized for different email services)
+        $emailConfig = [
+            'protocol'  => 'smtp',
+            'SMTPHost'  => 'smtp.gmail.com',
+            'SMTPPort'  => 587,
+            'SMTPUser'  => 'kvsoftlabs@gmail.com', // Replace with your email
+            'SMTPPass'  => 'npxj bjxg elyx eetn', // Replace with your password
+            'SMTPCrypto' => 'tls', // TLS encryption
+            'mailType' => 'text',
+            'charset' => 'utf-8'
+        ];
+        $email->initialize($emailConfig);
         $email->setTo('viewvivek93@gmail.com');
         $email->setSubject('New Trip Request');
         $email->setMessage("From: {$data['from']}\nTo: {$data['to']}\nContact Name: {$data['contact_name']}\nContact Number: {$data['contact_number']}");
-        $email->send();
+
+            // Attempt to send email and check for errors
+        if ($email->send()) {
+            return true;
+        } else {
+            // If email sending fails, log the error message
+            log_message('error', 'Email sending failed: ' . $email->printDebugger());
+            return false;
+        }
     }
 }
