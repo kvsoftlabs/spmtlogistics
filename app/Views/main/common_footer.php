@@ -2,7 +2,7 @@
     <!-- Footer Start -->
 <div class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
     <div class="row pt-5">
-        <div class="col-lg-7 col-md-6">
+        <div class="col-lg-12 col-md-6">
             <div class="row">
                 <div class="col-md-6 mb-5">
                     <h3 class="text-primary mb-4">Get In Touch</h3>
@@ -19,11 +19,10 @@
                 <div class="col-md-6 mb-5">
                     <h3 class="text-primary mb-4">Quick Links</h3>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
-                        <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Pricing Plan</a>
-                        <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        <a class="text-white mb-2" href="<?php echo base_url(); ?>"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                        <a class="text-white mb-2" href="<?php echo base_url('about'); ?>"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                        <a class="text-white mb-2" href="<?php echo base_url('service'); ?>"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                        <a class="text-white" href="<?php echo base_url('contact'); ?>"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                     </div>
                 </div>
             </div>

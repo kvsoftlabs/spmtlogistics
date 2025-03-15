@@ -9,6 +9,7 @@
 
 <!-- Contact Javascript File -->
 <script src="<?= base_url('assets/main/mail/jqBootstrapValidation.min.js'); ?>"></script>
-
+<!-- Bootstrap JS (with Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <!-- Template Javascript -->
 <script src="<?= base_url('assets/main/js/main.js'); ?>"></script>

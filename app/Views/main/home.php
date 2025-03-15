@@ -53,49 +53,40 @@
                 </div>
                 <div class="col-lg-9">
                     <div class="bg-primary py-5 px-4 px-sm-5">
-                        <form class="py-5">
+                        <form action="<?= site_url('trip/submit') ?>" method="post" class="py-5">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Name" required="required" />
+                                        <input type="text" name="from" class="form-control border-0 p-4" placeholder="From" required="required" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Email" required="required" />
+                                        <input type="text" name="to" class="form-control border-0 p-4" placeholder="To" required="required" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Name" required="required" />
+                                        <input type="text" name="contact_name" class="form-control border-0 p-4" placeholder="Contact Person Name" required="required" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Email" required="required" />
+                                        <input type="text" name="contact_number" class="form-control border-0 p-4" placeholder="Contact Number" required="required" />
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Name" required="required" />
+                                        <input type="text" name="material" class="form-control border-0 p-4" placeholder="Material" required="required" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control border-0 p-4" placeholder="Your Email" required="required" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control border-0 p-4" rows="3" id="message" placeholder="Message"
-                                            data-validation-required-message="Please enter your message">
-                                        </textarea>
+                                        <input type="text" name="weight" class="form-control border-0 p-4" placeholder="Weight in ton" required="required" />
                                     </div>
                                 </div>
                             </div>

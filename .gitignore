@@ -86,6 +86,13 @@ phpunit
 #-------------------------
 vendor/
 
+env
+.env
+.env.*
+
+# Ignore the entire public folder
+public/
+
 #-------------------------
 # IDE / Development Files
 #-------------------------
