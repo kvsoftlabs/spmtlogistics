@@ -13,3 +13,9 @@ $routes->get('/service', 'Main\Service::index'); // Map '/' to Main/Service
 $routes->get('/contact', 'Main\Contact::index'); // Map '/' to Main/Appointment
 
 $routes->post('trip/submit', 'TripController::submit');
+
+// Admin routes
+$routes->get('/admin', 'Auth::login'); // Map '/' to Admin/Login
+$routes->post('/auth/loginSubmit', 'Auth::loginSubmit');
+$routes->get('/logout', 'Auth::logout');
+$routes->get('admin/dashboard', 'Dashboard');

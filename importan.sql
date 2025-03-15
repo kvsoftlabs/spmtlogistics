@@ -1,0 +1,44 @@
+
+CREATE TABLE drivers (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(255) NOT NULL,
+     number VARCHAR(15) NOT NULL,
+     address TEXT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+
+CREATE TABLE customers (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(255) NOT NULL,
+     number VARCHAR(15) NOT NULL,
+     company_name VARCHAR(255) NULL,
+     address TEXT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+ );
+
+CREATE TABLE trips (
+     id INT AUTO_INCREMENT PRIMARY KEY,
+     customer_id INT NOT NULL,
+     driver_id INT NULL,  -- Optional driver ID
+     from_city VARCHAR(255) NOT NULL,
+     to_city VARCHAR(255) NOT NULL,
+     material VARCHAR(255) NOT NULL,
+     weight VARCHAR(50) NOT NULL,
+     requested BOOLEAN DEFAULT FALSE,
+     accepted BOOLEAN DEFAULT FALSE,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     FOREIGN KEY (customer_id) REFERENCES customers(id)
+ );
+
+
+CREATE TABLE admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO admins (name, email, password) VALUES ('admin', 'viewvivek93@gmail.com', '$2y$12$6sj/iwYQ3dfl4iW5PXTDme6NA2ky.brJoCQ82u9IMNHnR0iwHZ1cG');

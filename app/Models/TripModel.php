@@ -6,7 +6,7 @@ class TripModel extends Model
 {
     protected $table = 'trips';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['customer_id', 'from', 'to', 'material', 'weight', 'requested', 'accepted', 'driver_id'];
+    protected $allowedFields = ['customer_id', 'from_city', 'to_city', 'material', 'weight', 'requested', 'accepted', 'driver_id'];
 
     // Automatically manage timestamps
     protected $useTimestamps = true;
