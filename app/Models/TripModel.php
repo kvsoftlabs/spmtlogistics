@@ -14,4 +14,16 @@ class TripModel extends Model
     // Specify the timestamp fields
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+
+    // Update the accepted status to true
+    public function updateAcceptedStatus($tripId)
+    {
+        return $this->update($tripId, ['accepted' => true]);
+    }
+
+    // Delete a trip by ID
+    public function deleteTrip($tripId)
+    {
+        return $this->delete($tripId);
+    }
 }

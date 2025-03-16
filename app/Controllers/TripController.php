@@ -84,4 +84,29 @@ class TripController extends Controller
             return false;
         }
     }
+
+    public function accept($id)
+    {
+        $tripModel = new TripModel();
+
+        // Update accepted to true for the given trip ID
+        if ($tripModel->updateAcceptedStatus($id)) {
+            return redirect()->to('/admin/dashboard')->with('success', 'Trip Accepted Successfully');
+        } else {
+            return redirect()->to('/admin/dashboard')->with('error', 'Failed to accept trip');
+        }
+    }
+
+    // Delete the trip by ID
+    public function delete($id)
+    {
+        $tripModel = new TripModel();
+
+        // Delete the trip with the given ID
+        if ($tripModel->deleteTrip($id)) {
+            return redirect()->to('/admin/dashboard')->with('success', 'Trip Deleted Successfully');
+        } else {
+            return redirect()->to('/admin/dashboard')->with('error', 'Failed to delete trip');
+        }
+    }
 }

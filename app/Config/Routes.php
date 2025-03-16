@@ -19,3 +19,11 @@ $routes->get('/admin', 'Auth::login'); // Map '/' to Admin/Login
 $routes->post('/auth/loginSubmit', 'Auth::loginSubmit');
 $routes->get('/logout', 'Auth::logout');
 $routes->get('admin/dashboard', 'Dashboard');
+
+$routes->get('trip/accept/(:num)', 'TripController::accept/$1');  // Accept a trip
+$routes->get('trip/delete/(:num)', 'TripController::delete/$1');  // Delete a trip
+
+$routes->get('admin/drivers', 'DriverController::index');  // Show the list of drivers
+$routes->post('admin/drivers/store', 'DriverController::store');  // Store a new driver
+$routes->get('admin/drivers/delete/(:num)', 'DriverController::delete/$1');
+

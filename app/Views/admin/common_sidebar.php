@@ -4,7 +4,7 @@
         <!--begin::Brand Link-->
         <a href="<?php echo base_url(); ?>" class="brand-link">
         <!--begin::Brand Text-->
-        <span class="brand-text fw-light">PALANI MURUGAN</span>
+        <span class="brand-text fw-light"><i class="nav-icon bi bi-truck"></i> PALANI MURUGAN</span>
         <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -36,18 +36,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo base_url('admin/doctors'); ?>" class="nav-link <?php if($last_segment == 'doctors' ) { echo 'active'; } ?>">
-                    <i class="nav-icon bi bi-person-fill"></i>
+                <a href="<?php echo base_url('admin/drivers'); ?>" class="nav-link <?php if($last_segment == 'drivers' ) { echo 'active'; } ?>">
+                    <i class="nav-icon bi bi-people-fill"></i>
                     <p>
-                        Doctors
+                        Drivers
                     </p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?php echo base_url('admin/patient_timeline'); ?>" class="nav-link <?php if($last_segment == 'patient_timeline' ) { echo 'active'; } ?>">
-                    <i class="nav-icon bi bi-person-fill"></i>
+                <a href="<?php echo base_url('admin/customers'); ?>" class="nav-link <?php if($last_segment == 'customers' ) { echo 'active'; } ?>">
+                    <i class="nav-icon bi bi-person-workspace"></i>
                     <p>
-                        Patient Timeline
+                        Customers
                     </p>
                 </a>
             </li>
