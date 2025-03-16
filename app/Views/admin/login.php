@@ -3,10 +3,10 @@
   <!--begin::Head-->
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>PALANI MURUGAN TRANSPORT | Login Page</title>
+    <title>SRI PALANI MURUGAN TRANSPORT | Login Page</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="PALANI MURUGAN TRANSPORT | Login Page" />
+    <meta name="title" content="SRI PALANI MURUGAN TRANSPORT | Login Page" />
     <meta name="author" content="ColorlibHQ" />
     <!--begin::Fonts-->
     <link
@@ -41,7 +41,7 @@
   <body class="login-page bg-body-secondary">
     <div class="login-box">
       <div class="login-logo">
-        <a href="<?php echo base_url(); ?>"><b>PALANI MURUGAN TRANSPORT</a>
+        <a href="<?php echo base_url(); ?>"><b>SRI PALANI MURUGAN TRANSPORT</a>
       </div>
       <!-- /.login-logo -->
       <div class="card">

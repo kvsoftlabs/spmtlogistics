@@ -42,3 +42,5 @@ CREATE TABLE admins (
 );
 
 INSERT INTO admins (name, email, password) VALUES ('admin', 'viewvivek93@gmail.com', '$2y$12$6sj/iwYQ3dfl4iW5PXTDme6NA2ky.brJoCQ82u9IMNHnR0iwHZ1cG');
+
+ALTER TABLE drivers ADD driving_license_path VARCHAR(255) NOT NULL;

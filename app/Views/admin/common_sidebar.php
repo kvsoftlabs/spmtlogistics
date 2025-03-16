@@ -4,7 +4,7 @@
         <!--begin::Brand Link-->
         <a href="<?php echo base_url(); ?>" class="brand-link">
         <!--begin::Brand Text-->
-        <span class="brand-text fw-light"><i class="nav-icon bi bi-truck"></i> PALANI MURUGAN</span>
+        <span class="brand-text fw-light"><i class="nav-icon bi bi-truck"></i> SRI PALANI MURUGAN</span>
         <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->

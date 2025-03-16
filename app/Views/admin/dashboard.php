@@ -2,10 +2,10 @@
 <html lang="en">
   <!--begin::Head-->
   <head>
-    <title>PALANI MURUGAN TRANSPORT | Dashboard</title>
+    <title>SRI PALANI MURUGAN TRANSPORT | Dashboard</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="PALANI MURUGAN TRANSPORT | Dashboard" />
+    <meta name="title" content="SRI PALANI MURUGAN TRANSPORT | Dashboard" />
     <meta name="author" content="ColorlibHQ" />
     <?php include('common_styles.php'); ?>
   </head>

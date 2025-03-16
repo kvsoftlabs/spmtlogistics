@@ -34,6 +34,15 @@ class DriverController extends BaseController
             'address' => $this->request->getPost('address')
         ];
 
+            // Handle file upload
+        $file = $this->request->getFile('driving_license');
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newFileName = strtolower(str_replace(' ', '_', $this->request->getPost('name'))) . '.' . $file->getExtension(); // Rename using driver name
+            $file->move('uploads/drivers/', $newFileName); // Move file to uploads folder
+            $data['driving_license_path'] = 'uploads/drivers/' . $newFileName; // Save path in DB
+        }
+
         // Validate and insert the driver
         if ($driverModel->insert($data)) {
             return redirect()->to('admin/drivers')->with('success', 'Driver created successfully!');

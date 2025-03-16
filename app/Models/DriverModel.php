@@ -8,7 +8,7 @@ class DriverModel extends Model
 {
     protected $table = 'drivers';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'number', 'address'];
+    protected $allowedFields = ['name', 'number', 'address', 'driving_license_path'];
     protected $useTimestamps = true;
 
     // Optionally, you can add validation rules for the driver form
