@@ -59,6 +59,14 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?php echo base_url('admin/trips'); ?>" class="nav-link <?php if($last_segment == 'trips' ) { echo 'active'; } ?>">
+                    <i class="nav-icon bi bi-car-front-fill"></i>
+                    <p>
+                        Trips
+                    </p>
+                </a>
+            </li>
         </ul>
         <!--end::Sidebar Menu-->
         </nav>

@@ -12,7 +12,7 @@ $routes->get('/about', 'Main\About::index'); // Map '/' to Main/About
 $routes->get('/service', 'Main\Service::index'); // Map '/' to Main/Service
 $routes->get('/contact', 'Main\Contact::index'); // Map '/' to Main/Appointment
 
-$routes->post('trip/submit', 'TripController::submit');
+$routes->post('trip/submit', 'Main\TripController::submit');
 
 // Admin routes
 $routes->get('/admin', 'Auth::login'); // Map '/' to Admin/Login

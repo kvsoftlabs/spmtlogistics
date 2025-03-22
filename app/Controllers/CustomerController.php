@@ -7,6 +7,15 @@ use CodeIgniter\Controller;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        // Check if the user is logged in before allowing access to any method in this controller
+        if (!session()->get('isLoggedIn')) {
+            // If not logged in, redirect to the login page
+            return redirect()->to('/auth/login');
+        }
+    }
+
     public function index()
     {
         $customerModel = new CustomerModel();

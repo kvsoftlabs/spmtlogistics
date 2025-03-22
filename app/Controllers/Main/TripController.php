@@ -1,21 +1,13 @@
 <?php
-namespace App\Controllers;
 
+namespace App\Controllers\Main;
+
+use CodeIgniter\Controller;
 use App\Models\CustomerModel;
 use App\Models\TripModel;
-use CodeIgniter\Controller;
 
 class TripController extends Controller
 {
-    public function __construct()
-    {
-        // Check if the user is logged in before allowing access to any method in this controller
-        if (!session()->get('isLoggedIn')) {
-            // If not logged in, redirect to the login page
-            return redirect()->to('/auth/login');
-        }
-    }
-
     public function submit()
     {
         $customerModel = new CustomerModel();
@@ -57,28 +49,34 @@ class TripController extends Controller
         return redirect()->to('/')->with('success', 'Trip Request Submitted Successfully!');
     }
 
-    public function accept($id)
+    private function sendEmail($data)
     {
-        $tripModel = new TripModel();
+        $email = \Config\Services::email();
+    
+        // Set email configurations (can be customized for different email services)
+        $emailConfig = [
+            'protocol'  => 'smtp',
+            'SMTPHost'  => 'smtp.gmail.com',
+            'SMTPPort'  => 587,
+            'SMTPUser'  => 'kvsoftlabs@gmail.com', // Replace with your email
+            'SMTPPass'  => 'npxj bjxg elyx eetn', // Replace with your password
+            'SMTPCrypto' => 'tls', // TLS encryption
+            'mailType' => 'text',
+            'charset' => 'utf-8'
+        ];
+        $email->initialize($emailConfig);
+        $email->setTo('viewvivek93@gmail.com');
+        $email->setSubject('New Trip Request');
+        $email->setMessage("From: {$data['from']}\nTo: {$data['to']}\nContact Name: {$data['contact_name']}\nContact Number: {$data['contact_number']}");
 
-        // Update accepted to true for the given trip ID
-        if ($tripModel->updateAcceptedStatus($id)) {
-            return redirect()->to('/admin/dashboard')->with('success', 'Trip Accepted Successfully');
+            // Attempt to send email and check for errors
+        if ($email->send()) {
+            return true;
         } else {
-            return redirect()->to('/admin/dashboard')->with('error', 'Failed to accept trip');
+            // If email sending fails, log the error message
+            log_message('error', 'Email sending failed: ' . $email->printDebugger());
+            return false;
         }
     }
 
-    // Delete the trip by ID
-    public function delete($id)
-    {
-        $tripModel = new TripModel();
-
-        // Delete the trip with the given ID
-        if ($tripModel->deleteTrip($id)) {
-            return redirect()->to('/admin/dashboard')->with('success', 'Trip Deleted Successfully');
-        } else {
-            return redirect()->to('/admin/dashboard')->with('error', 'Failed to delete trip');
-        }
-    }
 }
