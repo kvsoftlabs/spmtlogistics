@@ -3,10 +3,10 @@
   <!--begin::Head-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>SRI PALANI MURUGAN TRANSPORT | Drivers</title>
+    <title>SRI PALANI MURUGAN TRANSPORT | Customers</title>
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="title" content="SRI PALANI MURUGAN TRANSPORT | | Drivers" />
+    <meta name="title" content="SRI PALANI MURUGAN TRANSPORT | | Customers" />
     <meta name="author" content="ColorlibHQ" />
     <?php include('common_styles.php'); ?>
 </head>
@@ -25,7 +25,7 @@
               </a>
             </li>
             <li class="nav-item d-none d-md-block"><a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link">Home</a></li>
-            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Drivers</a></li>
+            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Customer</a></li>
           </ul>
           <!--end::Start Navbar Links-->
         </div>
@@ -42,11 +42,11 @@
                 <div class="container-fluid">
                     <!--begin::Row-->
                     <div class="row">
-                    <div class="col-sm-6"><h3 class="mb-0">Drivers</h3></div>
+                    <div class="col-sm-6"><h3 class="mb-0">Customers</h3></div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="<?php echo base_url('admin/dashboard'); ?>">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Drivers</li>
+                        <li class="breadcrumb-item active" aria-current="page">Customers</li>
                         </ol>
                     </div>
                     </div>
@@ -59,84 +59,84 @@
                 <div class="container-fluid">
                     <div class="row g-4">
                         <div class="col-md-6">
-                            <form action="/admin/drivers/store" method="POST" enctype="multipart/form-data">
-                                <?= csrf_field(); ?> <!-- CSRF token -->
-                                <div class="card card-primary card-outline mb-4">
-                                    <div class="card-header">
-                                        <div class="card-title">Create Drivers</div>
+                        <form action="<?= site_url('admin/customers/store') ?>" method="POST">
+                            <?= csrf_field(); ?>
+                            <div class="card card-primary card-outline mb-4">
+                                <div class="card-header">
+                                    <div class="card-title">Create Customers</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Customer Name</label>
+                                        <input type="text" class="form-control" id="name" name="name" required>
                                     </div>
-
-                                    <div class="card-body">
-                                        <!-- Driver Name -->
-                                        <div class="mb-3">
-                                            <label for="driverName" class="form-label">Driver Name</label>
-                                            <input type="text" class="form-control" id="driverName" name="name" required>
-                                        </div>
-
-                                        <!-- number -->
-                                        <div class="mb-3">
-                                            <label for="number" class="form-label">Contact Number</label>
-                                            <input type="text" class="form-control" id="number" name="number" required>
-                                        </div>
-
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text">Address</span>
-                                            <textarea class="form-control" aria-label="Address" name="address" id="address"></textarea>
-                                        </div>
-
-                                        <div class="input-group mb-3">
-                                            <input type="file" class="form-control" id="drivingLicense" name="driving_license" accept="image/*">
-                                            <label class="input-group-text" for="drivingLicense">Driving License</label>
-                                        </div>
+        
+                                    <div class="mb-3">
+                                        <label for="number" class="form-label">Contact Number</label>
+                                        <input type="text" class="form-control" id="number" name="number" required>
                                     </div>
-
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary" id="createDriver" disabled>Create</button>
+        
+                                    <div class="mb-3">
+                                        <label for="gst_number" class="form-label">GST Number</label>
+                                        <input type="text" class="form-control" id="gst_number" name="gst_number">
+                                    </div>
+        
+                                    <div class="mb-3">
+                                        <label for="company_name" class="form-label">Company Name</label>
+                                        <input type="text" class="form-control" id="company_name" name="company_name">
+                                    </div>
+        
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <textarea class="form-control" id="address" name="address"></textarea>
                                     </div>
                                 </div>
-                            </form>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
                         </div>
 
                         <div class="col-md-6">
                             <div class="card mb-4">
-                                <div class="card-header"><h3 class="card-title">Drivers</h3></div>
+                                <div class="card-header"><h3 class="card-title">Customers</h3></div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 10px">#</th>
+                                                    <th>#</th>
                                                     <th>Name</th>
                                                     <th>Number</th>
+                                                    <th>GST Number</th>
+                                                    <th>Company Name</th>
                                                     <th>Address</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php if (!empty($drivers)): ?>
-                                                    <?php foreach ($drivers as $index => $driver): ?>
-                                                        <tr class="align-middle">
-                                                            <td><?= esc($driver['id']) ?></td>
-                                                            <td><?= esc($driver['name']) ?></td>
-                                                            <td><?= esc($driver['number']) ?></td>
-                                                            <td><?= esc($driver['address']) ?></td>
+                                                <?php if (!empty($customers)): ?>
+                                                    <?php foreach ($customers as $customer): ?>
+                                                        <tr>
+                                                            <td><?= esc($customer['id']) ?></td>
+                                                            <td><?= esc($customer['name']) ?></td>
+                                                            <td><?= esc($customer['number']) ?></td>
+                                                            <td><?= esc($customer['gst_number']) ?></td>
+                                                            <td><?= esc($customer['company_name']) ?></td>
+                                                            <td><?= esc($customer['address']) ?></td>
                                                             <td>
-                                                                <!-- View Button -->
-                                                                <button class="badge text-bg-info view-driver" 
-                                                                        data-id="<?= esc($driver['id']) ?>"
-                                                                        data-name="<?= esc($driver['name']) ?>"
-                                                                        data-number="<?= esc($driver['number']) ?>"
-                                                                        data-address="<?= esc($driver['address']) ?>"
-                                                                        data-license="<?= esc($driver['driving_license_path']) ?>">
-                                                                    View
-                                                                </button>
-                                                                <a href="<?= site_url('driver/delete/'.$driver['id']) ?>" class="badge text-bg-danger" onclick="return confirm('Are you sure you want to delete this driver?');"> Delete </a>
+                                                                <a href="<?= site_url('admin/customers/delete/'.$customer['id']); ?>" 
+                                                                class="badge text-bg-danger" 
+                                                                onclick="return confirm('Are you sure you want to delete this customer?');"> 
+                                                                Delete 
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
-                                                    <tr><td colspan="5" class="text-center">No drivers available.</td></tr>
+                                                    <tr><td colspan="7" class="text-center">No customers available.</td></tr>
                                                 <?php endif; ?>
                                             </tbody>
                                         </table>

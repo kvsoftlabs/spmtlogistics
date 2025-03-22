@@ -44,3 +44,20 @@ CREATE TABLE admins (
 INSERT INTO admins (name, email, password) VALUES ('admin', 'viewvivek93@gmail.com', '$2y$12$6sj/iwYQ3dfl4iW5PXTDme6NA2ky.brJoCQ82u9IMNHnR0iwHZ1cG');
 
 ALTER TABLE drivers ADD driving_license_path VARCHAR(255) NOT NULL;
+ALTER TABLE customers ADD gst_number VARCHAR(255) NOT NULL;
+ALTER TABLE customers ADD approved BOOLEAN DEFAULT FALSE;
+
+CREATE TABLE `vehicles` (
+    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `vehicle_name` VARCHAR(255) NOT NULL,
+    `registration_number` VARCHAR(100) NOT NULL UNIQUE,
+    `rc_expiry_date` DATE NOT NULL,
+    `rc_attachment` VARCHAR(255) NULL,
+    `insurance_expiry_date` DATE NOT NULL,
+    `insurance_attachment` VARCHAR(255) NULL,
+    `pollution_certificate_expiry_date` DATE NOT NULL,
+    `pollution_attachment` VARCHAR(255) NULL,
+    `created_at` DATETIME NULL,
+    `updated_at` DATETIME NULL
+);
+

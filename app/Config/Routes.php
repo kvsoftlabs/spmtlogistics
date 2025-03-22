@@ -27,3 +27,13 @@ $routes->get('admin/drivers', 'DriverController::index');  // Show the list of d
 $routes->post('admin/drivers/store', 'DriverController::store');  // Store a new driver
 $routes->get('admin/drivers/delete/(:num)', 'DriverController::delete/$1');
 
+$routes->get('admin/customers', 'CustomerController::index');
+$routes->post('admin/customers/store', 'CustomerController::store');
+$routes->get('admin/customers/delete/(:num)', 'CustomerController::delete/$1');
+
+$routes->get('admin/vehicles', 'VehicleController::index');
+$routes->post('admin/vehicles/store', 'VehicleController::store');
+$routes->post('admin/vehicles/update', 'VehicleController::update');
+$routes->get('admin/vehicle/delete/(:num)', 'VehicleController::delete/$1');
+
+

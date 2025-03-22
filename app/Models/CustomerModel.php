@@ -6,7 +6,7 @@ class CustomerModel extends Model
 {
     protected $table = 'customers';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['name', 'number'];
+    protected $allowedFields = ['name', 'number', 'gst_number', 'company_name', 'address'];
 
     // Automatically manage timestamps
     protected $useTimestamps = true;

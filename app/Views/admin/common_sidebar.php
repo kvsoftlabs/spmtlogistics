@@ -51,6 +51,14 @@
                     </p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?php echo base_url('admin/vehicles'); ?>" class="nav-link <?php if($last_segment == 'vehicles' ) { echo 'active'; } ?>">
+                    <i class="nav-icon bi bi-truck"></i>
+                    <p>
+                        Vehicles
+                    </p>
+                </a>
+            </li>
         </ul>
         <!--end::Sidebar Menu-->
         </nav>
