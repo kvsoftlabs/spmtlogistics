@@ -21,7 +21,8 @@ CREATE TABLE customers (
 CREATE TABLE trips (
      id INT AUTO_INCREMENT PRIMARY KEY,
      customer_id INT NOT NULL,
-     driver_id INT NULL,  -- Optional driver ID
+     driver_id INT NULL,
+     vehicle_id INT NULL,
      from_city VARCHAR(255) NOT NULL,
      to_city VARCHAR(255) NOT NULL,
      material VARCHAR(255) NOT NULL,
@@ -30,8 +31,10 @@ CREATE TABLE trips (
      accepted BOOLEAN DEFAULT FALSE,
      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-     FOREIGN KEY (customer_id) REFERENCES customers(id)
- );
+     FOREIGN KEY (customer_id) REFERENCES customers(id),
+     FOREIGN KEY (driver_id) REFERENCES drivers(id),
+     FOREIGN KEY (vehicle_id) REFERENCES vehicles(id)
+);
 
 
 CREATE TABLE admins (
@@ -48,7 +51,7 @@ ALTER TABLE customers ADD gst_number VARCHAR(255) NOT NULL;
 ALTER TABLE customers ADD approved BOOLEAN DEFAULT FALSE;
 
 CREATE TABLE `vehicles` (
-    `id` INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     `vehicle_name` VARCHAR(255) NOT NULL,
     `registration_number` VARCHAR(100) NOT NULL UNIQUE,
     `rc_expiry_date` DATE NOT NULL,

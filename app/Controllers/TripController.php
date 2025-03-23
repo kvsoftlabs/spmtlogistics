@@ -1,8 +1,10 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\CustomerModel;
 use App\Models\TripModel;
+use App\Models\CustomerModel;
+use App\Models\VehicleModel;
+use CodeIgniter\HTTP\Request;
 use CodeIgniter\Controller;
 
 class TripController extends Controller
@@ -16,69 +18,48 @@ class TripController extends Controller
         }
     }
 
-    public function submit()
+    public function index()
     {
+        $tripModel = new TripModel();
         $customerModel = new CustomerModel();
-        $tripModel = new TripModel();
+        $vehicleModel = new VehicleModel();
 
-        $data = $this->request->getPost();
-        $isAdmin = session()->get('is_admin');  // Assume you store whether the user is an admin in the session
-
-
-        // Insert Customer
-        $customerData = [
-            'name' => $data['contact_name'],
-            'number' => $data['contact_number']
+        $data = [
+            'trips' => $tripModel
+                ->select('trips.*, customers.name as customer_name, vehicles.registration_number as vehicle_registration_number')
+                ->join('customers', 'customers.id = trips.customer_id')
+                ->join('vehicles', 'vehicles.id = trips.vehicle_id')
+                ->findAll(),
+            'customers' => $customerModel->findAll(),
+            'vehicles' => $vehicleModel->findAll()
         ];
 
-        $customerId = $customerModel->insert($customerData);
-
-        // Insert Trip
-        $tripData = [
-            'customer_id' => $customerId,
-            'from_city' => $data['from'],
-            'to_city' => $data['to'],
-            'material' => $data['material'],
-            'weight' => $data['weight'],
-            'requested' => true,
-            'accepted' => false
-        ];
-
-        // Customer submission: Set driver ID to null and requested to true, accepted to false
-        $tripData['driver_id'] = null;
-        $tripData['requested'] = true;
-        $tripData['accepted'] = false;
-
-        $tripModel->insert($tripData);
-
-        // Send Email
-        $this->sendEmail($data);
-
-        return redirect()->to('/')->with('success', 'Trip Request Submitted Successfully!');
+        return view('admin/trips', $data);
     }
 
-    public function accept($id)
+    public function store()
     {
         $tripModel = new TripModel();
 
-        // Update accepted to true for the given trip ID
-        if ($tripModel->updateAcceptedStatus($id)) {
-            return redirect()->to('/admin/dashboard')->with('success', 'Trip Accepted Successfully');
-        } else {
-            return redirect()->to('/admin/dashboard')->with('error', 'Failed to accept trip');
-        }
+        $data = [
+            'customer_id' => $this->request->getPost('customer_id'),
+            'vehicle_id' => $this->request->getPost('vehicle_id'),
+            'from_city' => $this->request->getPost('from_city'),
+            'to_city' => $this->request->getPost('to_city'),
+            'material' => $this->request->getPost('material'),
+            'weight' => $this->request->getPost('weight'),
+            'requested' => false,
+            'accepted' => true
+        ];
+
+        $tripModel->insert($data);
+        return redirect()->to('/admin/trips')->with('success', 'Trip added successfully');
     }
 
-    // Delete the trip by ID
     public function delete($id)
     {
         $tripModel = new TripModel();
-
-        // Delete the trip with the given ID
-        if ($tripModel->deleteTrip($id)) {
-            return redirect()->to('/admin/dashboard')->with('success', 'Trip Deleted Successfully');
-        } else {
-            return redirect()->to('/admin/dashboard')->with('error', 'Failed to delete trip');
-        }
+        $tripModel->delete($id);
+        return redirect()->to('/admin/trips')->with('success', 'Trip deleted successfully');
     }
 }

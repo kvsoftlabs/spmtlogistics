@@ -170,7 +170,7 @@
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php else: ?>
-                                                <tr><td colspan="7" class="text-center">No vechiles available.</td></tr>
+                                                <tr><td colspan="8" class="text-center">No vechiles available.</td></tr>
                                             <?php endif; ?>
                                         </tbody>
                                     </table>

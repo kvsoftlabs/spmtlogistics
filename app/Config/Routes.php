@@ -36,4 +36,8 @@ $routes->post('admin/vehicles/store', 'VehicleController::store');
 $routes->post('admin/vehicles/update', 'VehicleController::update');
 $routes->get('admin/vehicle/delete/(:num)', 'VehicleController::delete/$1');
 
+$routes->get('admin/trips', 'TripController::index');
+$routes->post('admin/trips/store', 'TripController::store');
+$routes->get('admin/trips/delete/(:num)', 'TripController::delete/$1');
+
 
