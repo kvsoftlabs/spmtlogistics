@@ -28,10 +28,12 @@ class TripController extends Controller
 
         $data = [
             'trips' => $tripModel
-                ->select('trips.*, customers.name as customer_name, vehicles.registration_number as vehicle_registration_number, drivers.name as driver_name')
+                ->select('trips.*, customers.name as customer_name, vehicles.registration_number as vehicle_registration_number, drivers.name as driver_name, IFNULL(trip_advances.amount, 0) as advance_amount, IFNULL(trip_expenses.id, 0) as expense_id')
                 ->join('customers', 'customers.id = trips.customer_id')
                 ->join('vehicles', 'vehicles.id = trips.vehicle_id')
                 ->join('drivers', 'drivers.id = trips.driver_id')
+                ->join('trip_advances', 'trip_advances.trip_id = trips.id', 'left')
+                ->join('trip_expenses', 'trip_expenses.trip_id = trips.id', 'left')
                 ->findAll(),
             'customers' => $customerModel->findAll(),
             'drivers' => $driverModel->findAll(),

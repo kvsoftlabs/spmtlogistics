@@ -110,6 +110,7 @@
                                                     <th>From</th>
                                                     <th>To</th>
                                                     <th>Advance</th>
+                                                    <th>Expenses</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -129,12 +130,31 @@
                                                                 </button>
                                                             </td>
                                                             <td>
+                                                                <?php if ($trip['expense_id'] > 0): ?>
+                                                                    <button class="btn btn-sm btn-info edit-expense-btn"
+                                                                            data-trip-id="<?= esc($trip['id']) ?>"
+                                                                            data-driver-name="<?= esc($trip['driver_name']) ?>"
+                                                                            data-driver-id="<?= esc($trip['driver_id']) ?>"
+                                                                            data-advance="<?= esc($trip['advance_amount']) ?>">
+                                                                        Edit Expense
+                                                                    </button>
+                                                                <?php else: ?>
+                                                                    <button class="btn btn-sm btn-primary add-expense-btn"
+                                                                            data-trip-id="<?= esc($trip['id']) ?>"
+                                                                            data-driver-name="<?= esc($trip['driver_name']) ?>"
+                                                                            data-driver-id="<?= esc($trip['driver_id']) ?>"
+                                                                            data-advance="<?= esc($trip['advance_amount']) ?>">
+                                                                        Add Expense
+                                                                    </button>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                            <td>
                                                                 <a href="<?= site_url('trip/delete/'.$trip['id']) ?>" class="badge text-bg-danger" onclick="return confirm('Are you sure?');">Delete</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
-                                                    <tr><td colspan="8" class="text-center">No trips available.</td></tr>
+                                                    <tr><td colspan="9" class="text-center">No trips available.</td></tr>
                                                 <?php endif; ?>
                                             </tbody>
                                         </table>
@@ -171,6 +191,68 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save Advance</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trip Expense Modal -->
+        <div class="modal fade" id="expenseModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Trip Expense</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="expenseForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="ex_trip_id" name="trip_id">
+                            <input type="hidden" id="ex_driver_id" name="driver_id">
+                            
+                            <!-- Driver Name -->
+                            <div class="mb-3">
+                                <label for="ex_driver_name" class="form-label">Driver Name</label>
+                                <input type="text" class="form-control" id="ex_driver_name" name="ex_driver_name" readonly>
+                            </div>
+
+                            <!-- Expense Fields -->
+                            <div class="mb-3">
+                                <label for="bata" class="form-label">Driver Bata</label>
+                                <input type="number" class="form-control expense-input" id="bata" name="bata" >
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="vehicle_maintenance" class="form-label">Vehicle Maintenance</label>
+                                <input type="number" class="form-control expense-input" id="vehicle_maintenance" name="vehicle_maintenance">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="police_fine" class="form-label">Police Fine</label>
+                                <input type="number" class="form-control expense-input" id="police_fine" name="police_fine">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="other_expense" class="form-label">Other Expenses</label>
+                                <input type="number" class="form-control expense-input" id="other_expense" name="other_expense">
+                            </div>
+
+                            <!-- Advance Paid -->
+                            <div class="mb-3">
+                                <label for="advance_amount" class="form-label">Advance Paid</label>
+                                <input type="number" class="form-control" id="advance_amount" name="advance_amount" readonly>
+                            </div>
+
+                            <!-- Total Expense (Calculated) -->
+                            <div class="mb-3">
+                                <label for="total_expense" class="form-label">Total Expense (After Advance Deduction)</label>
+                                <input type="number" class="form-control" id="total_expense" name="total_expense" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="saveExpenseBtn">Save Expense</button>
+                            <button type="submit" class="btn btn-success" id="updateExpenseBtn" style="display: none;">Update Expense</button>
                         </div>
                     </form>
                 </div>
@@ -218,6 +300,107 @@
                     data: $(this).serialize(),
                     success: function (response) {
                         alert("Advance saved successfully!");
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert("Error: " + xhr.status + " - " + xhr.responseText);
+                    }
+                });
+            });
+
+            $(".add-expense-btn, .edit-expense-btn").on("click", function () {
+                let tripId = $(this).data("trip-id");
+                let driverName = $(this).data("driver-name");
+                let driverId = $(this).data("driver-id");
+                let advance = parseFloat($(this).data("advance")) || 0;
+
+                // Set values in modal
+                $("#ex_trip_id").val(tripId);
+                $("#ex_driver_id").val(driverId);
+                $("#ex_driver_name").val(driverName);
+                $("#advance_amount").val(advance);
+
+                if ($(this).hasClass("edit-expense-btn")) {
+                    $.ajax({
+                        url: "/admin/trip-expense/get/" + tripId,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (response) {
+                            if (response.status === "success" && response.data) {
+                                let data = response.data;
+                                
+                                // Populate the form fields with fetched data
+                                $("#ex_trip_id").val(data.trip_id);
+                                $("#ex_driver_id").val(data.driver_id);
+                                $("#ex_driver_name").val(data.driver_name); // Assuming driver_name is available
+                                $("#bata").val(data.bata || 0);
+                                $("#vehicle_maintenance").val(data.vehicle_maintenance || 0);
+                                $("#police_fine").val(data.police_fine || 0);
+                                $("#other_expense").val(data.other_expense || 0);
+                                $("#advance_amount").val(data.advance || 0);
+                                $("#total_expense").val(data.total || 0);
+
+                                // Show "Update Expense" button and hide "Save Expense"
+                                $("#saveExpenseBtn").hide();
+                                $("#updateExpenseBtn").show();
+                            } else {
+                                // Clear the form for a new entry
+                                $("#expenseForm")[0].reset();
+                                $("#ex_trip_id").val(tripId);
+
+                                // Show "Save Expense" button and hide "Update Expense"
+                                $("#saveExpenseBtn").show();
+                                $("#updateExpenseBtn").hide();
+                            }
+
+                            // Show the modal
+                            $("#expenseModal").modal("show");
+                        },
+                        error: function () {
+                            alert("Error fetching expense details!");
+                        }
+                    });
+                } else {
+                    $(".expense-input").val(0); // Reset inputs for new expense
+                    updateTotalExpense();
+                }
+
+                let expenseModal = new bootstrap.Modal(document.getElementById("expenseModal"));
+                expenseModal.show();
+            });
+
+            // Function to update total expense calculation
+            function updateTotalExpense() {
+                let bata = parseFloat($("#bata").val()) || 0;
+                let maintenance = parseFloat($("#vehicle_maintenance").val()) || 0;
+                let fine = parseFloat($("#police_fine").val()) || 0;
+                let other = parseFloat($("#other_expense").val()) || 0;
+                let advance = parseFloat($("#advance_amount").val()) || 0;
+
+                let total = bata + maintenance + fine + other - advance;
+                $("#total_expense").val(total >= 0 ? total : 0);
+            }
+
+            $(".expense-input").on("input", function () {
+                updateTotalExpense();
+            });
+
+            $("#expenseForm").on("submit", function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+                var tripId = $("#ex_trip_id").val();
+                var url = $("#updateExpenseBtn").is(":visible") 
+                    ? "/admin/trip-expense/update/" + tripId 
+                    : "/admin/trip-expense/store"; 
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        alert("Expense saved successfully!");
                         location.reload();
                     },
                     error: function (xhr, status, error) {

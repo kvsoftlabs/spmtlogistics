@@ -43,3 +43,7 @@ $routes->get('admin/trips/delete/(:num)', 'TripController::delete/$1');
 
 $routes->post('admin/trip-advance/store', 'TripAdvanceController::store');
 
+$routes->post('admin/trip-expense/store', 'TripExpenseController::store');
+$routes->get('admin/trip-expense/get/(:num)', 'TripExpenseController::getExpense/$1'); // Fetch expense details
+$routes->post('/admin/trip-expense/update/(:num)', 'TripExpenseController::updateExpense/$1');
+

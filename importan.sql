@@ -74,3 +74,20 @@ CREATE TABLE trip_advances (
     FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
 );
 
+CREATE TABLE trip_expenses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trip_id INT NOT NULL UNIQUE, -- Ensures only one expense per trip
+    driver_id INT NOT NULL,
+    bata DECIMAL(10,2) DEFAULT 0,
+    vehicle_maintenance DECIMAL(10,2) DEFAULT 0,
+    police_fine DECIMAL(10,2) DEFAULT 0,
+    other_expense DECIMAL(10,2) DEFAULT 0,
+    advance DECIMAL(10,2) DEFAULT 0,
+    total DECIMAL(10,2) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
+    FOREIGN KEY (driver_id) REFERENCES drivers(id) ON DELETE CASCADE
+);
+
+
