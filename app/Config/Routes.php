@@ -41,3 +41,5 @@ $routes->post('admin/trips/store', 'TripController::store');
 $routes->get('admin/trips/delete/(:num)', 'TripController::delete/$1');
 
 
+$routes->post('admin/trip-advance/store', 'TripAdvanceController::store');
+

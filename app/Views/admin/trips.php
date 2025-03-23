@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row g-4">
-                                            <div class="mb-3 col-md-6">
+                                            <div class="mb-3 col-md-4">
                                                 <label for="customer" class="form-label">Customer</label>
                                                 <select class="form-control" id="customer" name="customer_id" required>
                                                     <option value="">Select Customer</option>
@@ -47,12 +47,21 @@
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                            <div class="mb-3 col-md-6">
+                                            <div class="mb-3 col-md-4">
                                                 <label for="vehicle" class="form-label">Vehicle</label>
                                                 <select class="form-control" id="vehicle" name="vehicle_id" required>
                                                     <option value="">Select Vehicle</option>
                                                     <?php foreach ($vehicles as $vehicle): ?>
                                                         <option value="<?= $vehicle['id'] ?>"><?= esc($vehicle['vehicle_name']) ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-4">
+                                                <label for="vehicle" class="form-label">Driver</label>
+                                                <select class="form-control" id="driver" name="driver_id" required>
+                                                    <option value="">Select Driver</option>
+                                                    <?php foreach ($drivers as $driver): ?>
+                                                        <option value="<?= $driver['id'] ?>"><?= esc($driver['name']) ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
@@ -97,8 +106,10 @@
                                                     <th>#</th>
                                                     <th>Customer</th>
                                                     <th>Vehicle</th>
+                                                    <th>Driver</th>
                                                     <th>From</th>
                                                     <th>To</th>
+                                                    <th>Advance</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -109,15 +120,21 @@
                                                             <td><?= esc($trip['id']) ?></td>
                                                             <td><?= esc($trip['customer_name']) ?></td>
                                                             <td><?= esc($trip['vehicle_registration_number']) ?></td>
+                                                            <td><?= esc($trip['driver_name']) ?></td>
                                                             <td><?= esc($trip['from_city']) ?></td>
                                                             <td><?= esc($trip['to_city']) ?></td>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-warning add-advance-btn" data-trip-id="<?= esc($trip['id']) ?>" data-driver-name="<?= esc($trip['driver_name']) ?>" data-driver-id="<?= esc($trip['driver_id']) ?>">
+                                                                    Add Advance
+                                                                </button>
+                                                            </td>
                                                             <td>
                                                                 <a href="<?= site_url('trip/delete/'.$trip['id']) ?>" class="badge text-bg-danger" onclick="return confirm('Are you sure?');">Delete</a>
                                                             </td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
-                                                    <tr><td colspan="6" class="text-center">No trips available.</td></tr>
+                                                    <tr><td colspan="8" class="text-center">No trips available.</td></tr>
                                                 <?php endif; ?>
                                             </tbody>
                                         </table>
@@ -129,10 +146,41 @@
                 </div>
             </div>
         </main>
-        <?php include('common_footer.php'); ?>
-    </div>
 
+
+        <div class="modal fade" id="advanceModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Advance</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="advanceForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="trip_id" name="trip_id">
+                            <input type="hidden" id="driver_id" name="driver_id">
+                            <div class="mb-3">
+                                <label for="driver_name" class="form-label">Driver Name</label>
+                                <input type="text" class="form-control" id="driver_name" name="driver_name" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="amount">Advance Amount</label>
+                                <input type="number"  class="form-control" id="amount" name="amount">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Advance</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <?php include('common_footer.php'); ?>
 
     <script>
         $(document).ready(function () {
@@ -150,6 +198,34 @@
                 }
             });
 
+            $(".add-advance-btn").on("click", function () {
+                let tripId = $(this).data("trip-id");
+                let driverId = $(this).data("driver-id");
+                let driverName = $(this).data("driver-name");
+                $("#trip_id").val(tripId);
+                $("#driver_id").val(driverId);
+                $("#driver_name").val(driverName);
+
+                let advanceModal = new bootstrap.Modal(document.getElementById("advanceModal"));
+                advanceModal.show();
+            });
+
+            $("#advanceForm").on("submit", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "/admin/trip-advance/store",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        alert("Advance saved successfully!");
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert("Error: " + xhr.status + " - " + xhr.responseText);
+                    }
+                });
+            });
         });
     </script>
 </body>
