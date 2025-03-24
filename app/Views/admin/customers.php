@@ -113,7 +113,7 @@
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered">
+                                        <table class="table table-striped datatable">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>

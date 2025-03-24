@@ -61,25 +61,47 @@
 
 <script>
 
-const datatables = document.querySelectorAll('.datatable', true)
-      datatables.forEach(datatable => {
-      new simpleDatatables.DataTable(datatable, {
-          perPageSelect: [5, 10, 15, ["All", -1]],
-          columns: [
-              {
-                  select: 2,
-                  sortSequence: ["desc", "asc"]
-              },
-              {
-                  select: 3,
-                  sortSequence: ["desc"]
-              },
-              {
-                  select: 4,
-                  cellClass: "green",
-                  headerClass: "red"
-              }
-          ]
-      });
-  });
+document.addEventListener("DOMContentLoaded", function () {
+    try {
+        const datatables = document.querySelectorAll('.datatable');
+        
+        if (datatables.length === 0) {
+            console.error("❌ No table found with class 'datatable'");
+            alert("Error: No table found with class 'datatable'");
+            return;
+        }
+
+        datatables.forEach(datatable => {
+            try {
+                new simpleDatatables.DataTable(datatable, {
+                    perPageSelect: [5, 10, 15, ["All", -1]],
+                    columns: [
+                        {
+                            select: 2,
+                            sortSequence: ["desc", "asc"]
+                        },
+                        {
+                            select: 3,
+                            sortSequence: ["desc"]
+                        },
+                        {
+                            select: 4,
+                            cellClass: "green",
+                            headerClass: "red"
+                        }
+                    ]
+                });
+                console.log(`✅ DataTable initialized for`, datatable);
+            } catch (tableError) {
+                console.error("❌ Error initializing DataTable for:", datatable, tableError);
+                alert("Error initializing DataTable. Check console for details.");
+            }
+        });
+
+    } catch (error) {
+        console.error("❌ Fatal error in DataTable initialization:", error);
+        alert("Fatal error initializing DataTables. Check console for details.");
+    }
+});
+
 </script>

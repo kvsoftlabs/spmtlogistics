@@ -129,7 +129,7 @@
                                 <div class="card-header"><h3 class="card-title">Trips</h3></div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered">
+                                        <table class="table table-striped datatable">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -218,6 +218,7 @@
                 </div>
             </div>
         </main>
+        <?php include('common_footer.php'); ?>
 
 
         <!-- Edit/Add Advance Modal -->
@@ -343,10 +344,11 @@
             </div>
         </div>
 
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <?php include('common_footer.php'); ?>
+
+    <?php include('common_script.php'); ?>
+
 
     <script>
         $(document).ready(function () {
@@ -536,7 +538,6 @@
                 alert("Server Error: " + xhr.responseText);
             });
         });
-
 
     </script>
 </body>
