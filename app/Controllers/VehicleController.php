@@ -4,17 +4,23 @@ namespace App\Controllers;
 
 use App\Models\VehicleModel;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class VehicleController extends Controller
 {
-    public function __construct()
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
     {
+        parent::initController($request, $response, $logger);
+    
         // Check if the user is logged in before allowing access to any method in this controller
         if (!session()->get('isLoggedIn')) {
             // If not logged in, redirect to the login page
-            return redirect()->to('/auth/login');
+            header("Location: " . site_url('/admin'));
+            exit;
         }
-    }
+    }    
 
     public function index()
     {

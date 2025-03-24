@@ -19,6 +19,8 @@
     ></script>
     <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
     <script src="<?= base_url('assets/admin/js/adminlte.js'); ?>"></script>
+    <script src="<?= base_url('assets/admin/simple-datatables/simple-datatables.js'); ?>"></script>
+
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 
 
@@ -51,3 +53,33 @@
       crossorigin="anonymous"
     ></script>
     <!-- sortablejs -->
+<!-- DataTables CSS -->
+<!-- jQuery (Required for DataTables) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+
+const datatables = document.querySelectorAll('.datatable', true)
+      datatables.forEach(datatable => {
+      new simpleDatatables.DataTable(datatable, {
+          perPageSelect: [5, 10, 15, ["All", -1]],
+          columns: [
+              {
+                  select: 2,
+                  sortSequence: ["desc", "asc"]
+              },
+              {
+                  select: 3,
+                  sortSequence: ["desc"]
+              },
+              {
+                  select: 4,
+                  cellClass: "green",
+                  headerClass: "red"
+              }
+          ]
+      });
+  });
+</script>

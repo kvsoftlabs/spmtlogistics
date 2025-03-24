@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Palani Murugan Transport | About</title>
+    <title>Sri Palani Murugan Transport | About</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Palani Murugan Transport provides Full Truck Load, Part Load Transportation, and Over Dimensional Cargo Services along with Warehousing and Distribution in India." name="keywords">
+    <meta content="Sri Palani Murugan Transport provides Full Truck Load, Part Load Transportation, and Over Dimensional Cargo Services along with Warehousing and Distribution in India." name="keywords">
     <meta content="Cheapest transport service in Tirupathur, Chennai, Bangalore, Vellore." name="description">
     <?php include('common_styles.php'); ?>
 </head>
@@ -38,7 +38,7 @@
                 <div class="col-lg-7">
                     <h6 class="text-primary text-uppercase font-weight-bold">About Us</h6>
                     <h1 class="mb-4">Trusted & Faster Logistic Service Provider</h1>
-                    <p class="mb-4">Today, Palani Murugan Transport. is a beacon of innovation, performance, and trust in logistics industry. Our growth, slowly cultivated on the foundations of experience and modern management, is consistent with our dedication to excellence in a fiercely competitive business. Over nearly 15+ years of experience, we’ve brightened countless smiles, fueled by firm dedication.</p>
+                    <p class="mb-4">Today, Sri Palani Murugan Transport. is a beacon of innovation, performance, and trust in logistics industry. Our growth, slowly cultivated on the foundations of experience and modern management, is consistent with our dedication to excellence in a fiercely competitive business. Over nearly 15+ years of experience, we’ve brightened countless smiles, fueled by firm dedication.</p>
                     <p class="mb-4">Our growth, slowly cultivated on the foundations of experience and modern management, is consistent with our dedication to excellence in a fiercely competitive business. With a steadfast commitment to accountability, transparency, and passion, we ensure the secure and timely movement of each shipment.From rigorous planning to impeccable execution, we go above and beyond to exceed your expectations. Our unwavering dedication to our clients is the cornerstone of our success, as reflected in our mantra, “Whatever It Takes.”</p>
                 </div>
             </div>

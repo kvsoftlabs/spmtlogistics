@@ -12,4 +12,10 @@ class TripAdvanceModel extends Model
 
     // Enable automatic timestamps if needed
     protected $useTimestamps = true;
+
+    public function getAdvanceByTrip($tripId)
+    {
+        return $this->where('trip_id', $tripId)->first();
+    }
+
 }

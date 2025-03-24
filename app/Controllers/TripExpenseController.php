@@ -4,9 +4,23 @@ namespace App\Controllers;
 
 use App\Models\TripExpenseModel;
 use CodeIgniter\Controller;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class TripExpenseController extends Controller
 {
+    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        parent::initController($request, $response, $logger);
+    
+        // Check if the user is logged in before allowing access to any method in this controller
+        if (!session()->get('isLoggedIn')) {
+            // If not logged in, redirect to the login page
+            header("Location: " . site_url('/admin'));
+            exit;
+        }
+    }    
     public function store()
     {
         $tripExpenseModel = new TripExpenseModel();

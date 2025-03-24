@@ -37,7 +37,7 @@ class Auth extends BaseController
         $user = $userModel->getUserByUserName($name);
 
         if ($user && password_verify($password, $user['password'])) {
-            $session->set(['user_id' => $user['id'], 'name' => $user['name'], 'logged_in' => true]);
+            $session->set(['user_id' => $user['id'], 'name' => $user['name'], 'isLoggedIn' => true]);
             if ($remember) {
                 $cookieData = json_encode(['name' => $name, 'password' => $password]);
                 setcookie("remember_me", base64_encode($cookieData), time() + (86400 * 30), "/"); // 30 Days
@@ -50,8 +50,10 @@ class Auth extends BaseController
 
     public function logout()
     {
-        session()->destroy();
-        return redirect()->to('/login');
+        $session = session();
+        $session->destroy(); // Destroy the session
+
+        return $this->response->setJSON(['status' => 'success']);
     }
 }
 

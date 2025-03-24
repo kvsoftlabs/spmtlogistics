@@ -23,6 +23,8 @@
 <!--end::Third Party Plugin(Bootstrap Icons)-->
 <!--begin::Required Plugin(AdminLTE)-->
 <link rel="stylesheet" href="<?= base_url('assets/admin/css/adminlte.css'); ?>" />
+<link rel="stylesheet" href="<?= base_url('assets/admin/simple-datatables/style.css'); ?>" />
+
 <!--end::Required Plugin(AdminLTE)-->
 <!-- apexcharts -->
 <link
@@ -38,3 +40,4 @@
     integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
     crossorigin="anonymous"
 />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">

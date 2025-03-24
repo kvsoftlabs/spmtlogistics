@@ -17,7 +17,7 @@ $routes->post('trip/submit', 'Main\TripController::submit');
 // Admin routes
 $routes->get('/admin', 'Auth::login'); // Map '/' to Admin/Login
 $routes->post('/auth/loginSubmit', 'Auth::loginSubmit');
-$routes->get('/logout', 'Auth::logout');
+$routes->post('/admin/logout', 'Auth::logout');
 $routes->get('admin/dashboard', 'Dashboard');
 
 $routes->get('trip/accept/(:num)', 'TripController::accept/$1');  // Accept a trip
@@ -46,4 +46,7 @@ $routes->post('admin/trip-advance/store', 'TripAdvanceController::store');
 $routes->post('admin/trip-expense/store', 'TripExpenseController::store');
 $routes->get('admin/trip-expense/get/(:num)', 'TripExpenseController::getExpense/$1'); // Fetch expense details
 $routes->post('/admin/trip-expense/update/(:num)', 'TripExpenseController::updateExpense/$1');
+
+$routes->get('trips', 'TripController::index');
+$routes->post('trips/update-pricing', 'TripController::updatePricing');
 

@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Palani Murugan Transport | Service</title>
+    <title>Sri Palani Murugan Transport | Service</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Palani Murugan Transport provides Full Truck Load, Part Load Transportation, and Over Dimensional Cargo Services along with Warehousing and Distribution in India." name="keywords">
+    <meta content="Sri Palani Murugan Transport provides Full Truck Load, Part Load Transportation, and Over Dimensional Cargo Services along with Warehousing and Distribution in India." name="keywords">
     <meta content="Cheapest transport service in Tirupathur, Chennai, Bangalore, Vellore." name="description">
     <?php include('common_styles.php'); ?>
 </head>

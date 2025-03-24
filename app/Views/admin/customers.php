@@ -28,6 +28,15 @@
             <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Customer</a></li>
           </ul>
           <!--end::Start Navbar Links-->
+            <!--begin::End Navbar Links-->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item user-menu">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <span class="d-none d-md-inline">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+            <!--end::End Navbar Links-->
         </div>
         <!--end::Container-->
       </nav>

@@ -9,6 +9,35 @@
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
         
+        <!--begin::Header-->
+        <nav class="app-header navbar navbar-expand bg-body">
+            <!--begin::Container-->
+            <div class="container-fluid">
+            <!--begin::Start Navbar Links-->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                    <i class="bi bi-list"></i>
+                </a>
+                </li>
+                <li class="nav-item d-none d-md-block"><a href="<?php echo base_url('admin/dashboard'); ?>" class="nav-link">Home</a></li>
+                <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Trips</a></li>
+            </ul>
+
+            <!--end::Start Navbar Links-->
+            <!--begin::End Navbar Links-->
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item user-menu">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <span class="d-none d-md-inline">Sign out</span>
+                    </a>
+                </li>
+            </ul>
+            <!--end::End Navbar Links-->
+            </div>
+            <!--end::Container-->
+        </nav>
+        <!--end::Header-->
         <?php include('common_sidebar.php'); ?>
         
         <main class="app-main">
@@ -111,6 +140,7 @@
                                                     <th>To</th>
                                                     <th>Advance</th>
                                                     <th>Expenses</th>
+                                                    <th>Customer Pricing</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -125,11 +155,22 @@
                                                             <td><?= esc($trip['from_city']) ?></td>
                                                             <td><?= esc($trip['to_city']) ?></td>
                                                             <td>
-                                                                <button class="btn btn-sm btn-warning add-advance-btn" data-trip-id="<?= esc($trip['id']) ?>" data-driver-name="<?= esc($trip['driver_name']) ?>" data-driver-id="<?= esc($trip['driver_id']) ?>">
-                                                                    Add Advance
+                                                                <span class="advance-amount" data-trip-id="<?= esc($trip['id']) ?>" data-advance="<?= esc($trip['advance_amount']) ?>">
+                                                                    ₹<?= esc($trip['advance_amount'] ?: 0) ?>
+                                                                </span>
+                                                                <button class="btn btn-sm btn-warning edit-advance-btn"
+                                                                        data-trip-id="<?= esc($trip['id']) ?>"
+                                                                        data-driver-id="<?= esc($trip['driver_id']) ?>"
+                                                                        data-driver-name="<?= esc($trip['driver_name']) ?>"
+                                                                        data-advance="<?= esc($trip['advance_amount']) ?>">
+                                                                    <?= $trip['advance_amount'] > 0 ? "Edit Advance" : "Add Advance" ?>
                                                                 </button>
                                                             </td>
+
                                                             <td>
+                                                                <span class="customer-price" data-trip-id="<?= esc($trip['id']) ?>">
+                                                                    ₹<?= esc($trip['expense_amount']) ?>
+                                                                </span>
                                                                 <?php if ($trip['expense_id'] > 0): ?>
                                                                     <button class="btn btn-sm btn-info edit-expense-btn"
                                                                             data-trip-id="<?= esc($trip['id']) ?>"
@@ -147,6 +188,17 @@
                                                                         Add Expense
                                                                     </button>
                                                                 <?php endif; ?>
+                                                            </td>
+                                                            <td>
+                                                                <span class="customer-price" data-trip-id="<?= esc($trip['id']) ?>">
+                                                                    ₹<?= esc($trip['customer_price']) ?>
+                                                                </span>
+                                                                <button class="btn btn-sm btn-warning edit-price-btn"
+                                                                        data-trip-id="<?= esc($trip['id']) ?>"
+                                                                        data-customer-id="<?= esc($trip['customer_id']) ?>"
+                                                                        data-price="<?= esc($trip['customer_price']) ?>">
+                                                                    <?= $trip['customer_price'] > 0 ? "Edit Price" : "Add Price" ?>
+                                                                </button>
                                                             </td>
                                                             <td>
                                                                 <a href="<?= site_url('trip/delete/'.$trip['id']) ?>" class="badge text-bg-danger" onclick="return confirm('Are you sure?');">Delete</a>
@@ -168,24 +220,27 @@
         </main>
 
 
+        <!-- Edit/Add Advance Modal -->
         <div class="modal fade" id="advanceModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Advance</h5>
+                        <h5 class="modal-title">Manage Advance Payment</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <form id="advanceForm">
                         <div class="modal-body">
-                            <input type="hidden" id="trip_id" name="trip_id">
-                            <input type="hidden" id="driver_id" name="driver_id">
+                            <input type="hidden" id="advance_trip_id" name="trip_id">
+                            <input type="hidden" id="advance_driver_id" name="driver_id">
+                            
                             <div class="mb-3">
-                                <label for="driver_name" class="form-label">Driver Name</label>
-                                <input type="text" class="form-control" id="driver_name" name="driver_name" readonly>
+                                <label for="advance_driver_name" class="form-label">Driver Name</label>
+                                <input type="text" class="form-control" id="advance_driver_name" name="driver_name" readonly>
                             </div>
+
                             <div class="mb-3">
-                                <label for="amount">Advance Amount</label>
-                                <input type="number"  class="form-control" id="amount" name="amount">
+                                <label for="advance_amount">Advance Amount</label>
+                                <input type="number" class="form-control" id="advance_amount" name="amount" required>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -196,6 +251,35 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Edit Price Modal -->
+        <div class="modal fade" id="editPriceModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Trip Price</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="editPriceForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="edit_trip_id" name="trip_id">
+                            <input type="hidden" id="edit_customer_id" name="customer_id">
+
+                            <div class="mb-3">
+                                <label for="edit_price" class="form-label">New Price</label>
+                                <input type="number" class="form-control" id="edit_price" name="price" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Update Price</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
         <!-- Trip Expense Modal -->
         <div class="modal fade" id="expenseModal" tabindex="-1">
@@ -280,34 +364,40 @@
                 }
             });
 
-            $(".add-advance-btn").on("click", function () {
+            $(document).on("click", ".edit-advance-btn", function () {
                 let tripId = $(this).data("trip-id");
                 let driverId = $(this).data("driver-id");
                 let driverName = $(this).data("driver-name");
-                $("#trip_id").val(tripId);
-                $("#driver_id").val(driverId);
-                $("#driver_name").val(driverName);
+                let advanceAmount = $(this).data("advance") || 0;
 
-                let advanceModal = new bootstrap.Modal(document.getElementById("advanceModal"));
-                advanceModal.show();
+                // Populate modal fields
+                $("#advance_trip_id").val(tripId);
+                $("#advance_driver_id").val(driverId);
+                $("#advance_driver_name").val(driverName);
+                $("#advance_amount").val(advanceAmount);
+
+                // Show the modal
+                $("#advanceModal").modal("show");
             });
 
+            // Handle form submission
             $("#advanceForm").on("submit", function (e) {
-                e.preventDefault();
-                $.ajax({
-                    url: "/admin/trip-advance/store",
-                    type: "POST",
-                    data: $(this).serialize(),
-                    success: function (response) {
-                        alert("Advance saved successfully!");
+                e.preventDefault(); // Prevent default form submission
+
+                let formData = $(this).serialize();
+
+                $.post("/admin/trip-advance/store", formData, function (response) {
+                    if (response.status === "success") {
+                        $("#advanceModal").modal("hide");
                         location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", xhr.responseText);
-                        alert("Error: " + xhr.status + " - " + xhr.responseText);
+                    } else {
+                        alert("Error: " + response.message);
                     }
+                }, "json").fail(function (xhr) {
+                    alert("Server Error: " + xhr.responseText);
                 });
             });
+
 
             $(".add-expense-btn, .edit-expense-btn").on("click", function () {
                 let tripId = $(this).data("trip-id");
@@ -410,6 +500,44 @@
                 });
             });
         });
+
+        $(document).on("click", ".edit-price-btn", function () {
+            let tripId = $(this).data("trip-id");
+            let currentPrice = $(this).data("price");
+            let customerId = $(this).data("customer-id");
+
+            // Populate modal fields
+            $("#edit_trip_id").val(tripId);
+            $("#edit_customer_id").val(customerId);
+            $("#edit_price").val(currentPrice);
+
+            // Show the modal
+            $("#editPriceModal").modal("show");
+        });
+
+        // Handle form submission
+        $("#editPriceForm").on("submit", function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            let formData = {
+                trip_id: $("#edit_trip_id").val(),
+                price: $("#edit_price").val(),
+                customer_id: $("#edit_customer_id").val()
+            };
+
+            $.post("/trips/update-pricing", formData, function (response) {
+                if (response.status === "success") {
+                    $("#editPriceModal").modal("hide");
+                    location.reload();
+                } else {
+                    alert("Error: " + response.message);
+                }
+            }, "json").fail(function (xhr) {
+                alert("Server Error: " + xhr.responseText);
+            });
+        });
+
+
     </script>
 </body>
 </html>
